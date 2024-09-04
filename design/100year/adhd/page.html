@@ -4,15 +4,53 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>백년뒤앤 몰입(ADHD) 상세페이지</title>
+
+    <!--폰트어썸-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     
     <style>
         * { margin:0; padding:0; }
+        body { transition:all .3s;  }
+        body.light-mode { background-color: #ffffff; color: #000000; }
+        body.dark-mode { background-color: #000000; color: #ffffff; }
+
         #wrap { max-width:860px; width:100%; margin:0 auto; text-align:center; } 
         #wrap p { line-height:0; }
         #wrap p img { width:100%; }
+
+        /*슬라이드 버튼*/
+        .switch { position:fixed; top:20px; right:20px; display:inline-block; width:60px; height:34px; }
+        .switch input { opacity:0; width:0; height:0; }
+        .slider { position:absolute; cursor:pointer; top:0; left:0; right:0; bottom:0; background:#ddd; transition:0.4s; border-radius:34px; }
+        .slider:before { position:absolute; content:""; height:26px; width:26px; left:4px; bottom:4px; background:#fff; transition:0.4s; border-radius:50%; display:flex; align-items:center; justify-content: center; font-size:16px; }
+        input:checked + .slider { background-color: #333; }
+        input:checked + .slider:before { transform: translateX(26px);background:#000; }
+
+        /* 아이콘 스타일 */
+        .slider:before {
+            content: "\f185"; /* FontAwesome sun icon */
+            font-family: "Font Awesome 5 Free";
+            font-weight: 900;
+            color: #000; /* Sun color */
+        }
+
+        input:checked + .slider:before {
+            content: "\f186"; /* FontAwesome moon icon */
+            color: #FFFFFF; /* Moon color */
+        }
+
+        /*모바일 화면에서는 모드변경 버튼 안보이게*/
+        @media only screen and (max-width: 860px) {
+            .switch { display:none; }
+        }
     </style>
 </head>
-<body>
+<body class="light-mode">
+    <label class="switch">
+        <input type="checkbox" id="mode-toggle">
+        <span class="slider"></span>
+    </label>
+
     <div id="wrap">
         <p><img src="img/01-1.jpg" alt=""></p>
         <p><img src="img/01-2.gif" alt=""></p>
@@ -23,5 +61,22 @@
         <p><img src="img/05.jpg" alt=""></p>
         <p><img src="img/06.jpg" alt=""></p>
     </div>
+
+    <!--모드 변경 스크립트 시작-->
+    <script>
+        const toggleSwitch = document.getElementById('mode-toggle');
+        const body = document.body;
+
+        toggleSwitch.addEventListener('change', () => {
+            if (toggleSwitch.checked) {
+                body.classList.remove('light-mode');
+                body.classList.add('dark-mode');
+            } else {
+                body.classList.remove('dark-mode');
+                body.classList.add('light-mode');
+            }
+        });
+    </script>
+    <!--모드 변경 스크립트 끝-->
 </body>
 </html>
